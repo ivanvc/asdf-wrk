@@ -1,4 +1,4 @@
-releases_path=https://api.github.com/repos/wg/wrk/releases
+releases_path=https://api.github.com/repos/wg/wrk/tags
 cmd="curl -s"
 if [ -n "$OAUTH_TOKEN" ]; then
   cmd="$cmd -H 'Authorization: token $OAUTH_TOKEN'"
@@ -11,5 +11,5 @@ if sort --help | grep -q -- '-V'; then
 fi
 
 # Fetch all tag names, and get only second column. Then remove all unnecesary characters.
-versions=$(eval $cmd | grep -oE "tag_name\": \".{1,15}\"," | sed 's/tag_name\": \"v//;s/\",//' | $sort_cmd)
+versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | $sort_cmd)
 echo $versions
