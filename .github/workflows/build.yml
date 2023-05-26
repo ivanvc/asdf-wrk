@@ -19,4 +19,4 @@ jobs:
       - name: asdf_plugin_test
         uses: asdf-vm/actions/plugin-test@v2
         with:
-          command: wrk --help
+          command: wrk http://example.org -c 1 -t 1 -d 1s
