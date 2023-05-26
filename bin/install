@@ -1,21 +1,11 @@
-if [ "$TMPDIR" = "" ]; then
-  tmp_download_dir=$(mktemp -d)
-else
-  tmp_download_dir=$TMPDIR
-fi
+#!/usr/bin/env bash
 
-mkdir -p $tmp_download_dir
-cd $tmp_download_dir
+set -euo pipefail
 
-get_download_url() {
-  local version=$1
-  echo "https://github.com/wg/wrk/archive/${version}.tar.gz"
-}
+current_script_path=${BASH_SOURCE[0]}
+plugin_dir=$(dirname "$(dirname "$current_script_path")")
 
-download_url=$(get_download_url $ASDF_INSTALL_VERSION)
-curl -L $download_url | tar zxv
-cd wrk-$ASDF_INSTALL_VERSION
-make
+# shellcheck source=../lib/utils.bash
+source "${plugin_dir}/lib/utils.bash"
 
-mkdir -p $ASDF_INSTALL_PATH/bin
-mv wrk $ASDF_INSTALL_PATH/bin
+install_version "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH"

@@ -1,15 +1,11 @@
-releases_path=https://api.github.com/repos/wg/wrk/tags
-cmd="curl -s"
-if [ -n "$OAUTH_TOKEN" ]; then
-  cmd="$cmd -H 'Authorization: token $OAUTH_TOKEN'"
-fi
-cmd="$cmd $releases_path"
+#!/usr/bin/env bash
 
-sort_cmd='sort'
-if sort --help | grep -q -- '-V'; then
-  sort_cmd='sort -V'
-fi
+set -euo pipefail
 
-# Fetch all tag names, and get only second column. Then remove all unnecesary characters.
-versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | $sort_cmd)
-echo $versions
+current_script_path=${BASH_SOURCE[0]}
+plugin_dir=$(dirname "$(dirname "$current_script_path")")
+
+# shellcheck source=../lib/utils.bash
+source "${plugin_dir}/lib/utils.bash"
+
+list_all_versions | sort_versions | xargs echo
