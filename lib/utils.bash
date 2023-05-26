@@ -52,8 +52,8 @@ install_version() {
 	fi
 
 	(
-    cd "$ASDF_DOWNLOAD_PATH"
-    make
+		cd "$ASDF_DOWNLOAD_PATH"
+		make
 
 		mkdir -p "$install_path"
 		cp "$ASDF_DOWNLOAD_PATH"/wrk "$install_path"
