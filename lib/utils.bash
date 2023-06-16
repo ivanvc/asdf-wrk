@@ -4,7 +4,7 @@ set -euo pipefail
 
 GH_REPO="https://github.com/wg/wrk"
 TOOL_NAME="wrk"
-TOOL_TEST="wrk --help"
+TOOL_TEST="wrk http://example.org -c 1 -t 1 -d 1"
 
 fail() {
 	echo -e "asdf-$TOOL_NAME: $*"
